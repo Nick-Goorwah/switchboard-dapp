@@ -29,7 +29,7 @@ const SwalButtons = {
 
 interface FormClaim extends Claim {
   isSynced?: boolean;
-  claimTypeVersion?: string;
+  claimTypeVersion: string;
 }
 
 enum RolePreconditionType {
