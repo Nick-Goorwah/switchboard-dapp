@@ -26,6 +26,12 @@ install:
       echo "Prod Env Disabled"
       npm run build
     fi
+  - |
+    if [ "$TRAVIS_BRANCH" = "staging" ]; then
+      cp src/environments/environment.dev.ts src/environments/environment.ts
+      echo "Prod Env Disabled"
+      npm run build
+    fi
   - npm run test:headless
 script:
   - echo "skipping tests"
@@ -40,6 +46,11 @@ deploy:
     script: rsync -e "ssh -o StrictHostKeyChecking=no" -r dist/* $SB_WEB_HOST:~/switchboard-dapp/master
     on:
       branch: master
+  - provider: script
+    skip_cleanup: true
+    script: rsync -e "ssh -o StrictHostKeyChecking=no" -r dist/* $SB_WEB_HOST:~/switchboard-dapp/staging
+    on:
+      branch: staging
 after_deploy:
   - curl -sL https://sentry.io/get-cli/ | bash
   - chmod +x ./sentry-upload.sh
