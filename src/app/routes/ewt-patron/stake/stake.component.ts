@@ -19,7 +19,7 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 export class StakeComponent implements OnInit {
   inputFocused: boolean;
   tokenAmount: number;
-  amountToStake = new FormControl('', [Validators.min(0), Validators.required]);
+  amountToStake = new FormControl('', [Validators.min(1), Validators.required]);
   balance$ = this.store.select(stakeSelectors.getBalance).pipe(tap(balance => this.tokenAmount = +balance));
   earnedReward$ = this.store.select(stakeSelectors.getReward);
   stakeAmount$ = this.store.select(stakeSelectors.getStakeAmount);
