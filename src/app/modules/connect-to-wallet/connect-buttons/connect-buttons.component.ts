@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProviderType } from 'iam-client-lib';
 import { MetamaskProviderService } from '../../../shared/services/metamask-provider/metamask-provider.service';
+import { EkcSettingsService } from '../ekc-settings/services/ekc-settings.service';
 
 @Component({
   selector: 'app-connect-buttons',
@@ -15,11 +16,18 @@ export class ConnectButtonsComponent {
 
   @Output() connectTo = new EventEmitter<ProviderType>();
 
-  constructor(private metamaskProviderService: MetamaskProviderService) {
+  constructor(private metamaskProviderService: MetamaskProviderService,
+              private ekcSettingsService: EkcSettingsService) {
   }
 
   get fullNetworkName() {
     return this.metamaskProviderService.getFullNetworkName();
+  }
+
+  editEKCSettings(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.ekcSettingsService.edit();
   }
 
   connectToWalletConnect() {

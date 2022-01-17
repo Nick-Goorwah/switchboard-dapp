@@ -1,25 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConfirmationDialogComponent, ConfirmationDialogData } from './confirmation-dialog.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { dialogSpy, getElement } from '@tests';
+import { DialogDataMock } from '../../../tests/mocks/dialog-data-mock';
 
-class ConfirmDialogDataMock {
-  setData(value: ConfirmationDialogData) {
-    Object.assign(this, value);
-  }
-}
 
 describe('ConfirmationDialogComponent', () => {
   let component: ConfirmationDialogComponent;
   let fixture: ComponentFixture<ConfirmationDialogComponent>;
-  let mockDialogData: ConfirmDialogDataMock;
+  let mockDialogData: DialogDataMock;
   let hostDebug: DebugElement;
   beforeEach(() => {
-    mockDialogData = new ConfirmDialogDataMock();
+    mockDialogData = new DialogDataMock();
     TestBed.configureTestingModule({
       declarations: [ConfirmationDialogComponent],
       imports: [

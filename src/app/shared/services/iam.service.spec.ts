@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { IamService } from './iam.service';
 import { EnvService } from './env/env.service';
+import { EkcSettingsService } from '../../modules/connect-to-wallet/ekc-settings/services/ekc-settings.service';
 
 describe('IamService', () => {
   let service: IamService;
@@ -10,7 +11,8 @@ describe('IamService', () => {
     TestBed.configureTestingModule({
       providers: [
         IamService,
-        {provide: EnvService, useValue: {}}
+        {provide: EnvService, useValue: {}},
+        {provide: EkcSettingsService, useValue: {}}
       ]
     });
 

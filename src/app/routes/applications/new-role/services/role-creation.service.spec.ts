@@ -3,13 +3,14 @@ import { TestBed } from '@angular/core/testing';
 import { RoleCreationService } from './role-creation.service';
 import { DomainsFacadeService } from '../../../../shared/services/domains-facade/domains-facade.service';
 import { SwitchboardToastrService } from '../../../../shared/services/switchboard-toastr.service';
-import { loadingServiceSpy, toastrSpy } from '@tests';
+import { loadingServiceSpy } from '@tests';
 import { LoadingService } from '../../../../shared/services/loading.service';
 import { IssuerType } from '../models/issuer-type.enum';
 
 describe('RoleCreationService', () => {
   let service: RoleCreationService;
   const domainsFacadeServiceSpy = jasmine.createSpyObj(DomainsFacadeService, ['isOwner', 'checkExistenceOfDomain', 'getDIDsByRole']);
+  const toastrSpy = jasmine.createSpyObj('ToastrService', ['success', 'error']);
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
