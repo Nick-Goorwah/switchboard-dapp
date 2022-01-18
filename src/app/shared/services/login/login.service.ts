@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IamService, PROVIDER_TYPE } from '../iam.service';
 import { LoadingService } from '../loading.service';
 import { ToastrService } from 'ngx-toastr';
-import { AccountInfo, ProviderType, PUBLIC_KEY, IS_ETH_SIGNER } from 'iam-client-lib';
+import { AccountInfo, IS_ETH_SIGNER, ProviderType, PUBLIC_KEY } from 'iam-client-lib';
 import SWAL from 'sweetalert';
 import { from, Observable, of } from 'rxjs';
 import { IamListenerService } from '../iam-listener/iam-listener.service';
@@ -46,10 +46,10 @@ export class LoginService {
 
   isSessionActive() {
     return (
-      Boolean(localStorage.getItem(PROVIDER_TYPE)) 
-      && Boolean(localStorage.getItem(PUBLIC_KEY)) 
+      Boolean(localStorage.getItem(PROVIDER_TYPE))
+      && Boolean(localStorage.getItem(PUBLIC_KEY))
       && Boolean(localStorage.getItem(IS_ETH_SIGNER))
-      );
+    );
   }
 
   storeSession() {
@@ -115,7 +115,8 @@ export class LoginService {
     });
   }
 
-  disconnect() {
+  disconnect(): void {
+    this.clearSession();
     this.iamService.closeConnection().subscribe(() => {
       location.reload();
     });
