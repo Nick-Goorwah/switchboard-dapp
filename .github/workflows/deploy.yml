@@ -58,7 +58,10 @@ jobs:
         run: |
           cp src/environments/environment.dev.ts src/environments/environment.ts
           echo "Prod Env Disabled"
+          npm run setup-sentry
           npm run build-stedin
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
       - name: Deploy stedin
         if: github.ref == 'refs/heads/develop'

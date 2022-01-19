@@ -25,6 +25,7 @@ import { MenuService } from './core/menu/menu.service';
 import { menu } from './routes/menu';
 import { StoreRootModule } from './state/store-root.module';
 import { EnvServiceProvider } from './shared/services/env/env.service.factory';
+import { Router } from '@angular/router';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -42,14 +43,25 @@ const providers: Provider[] = [
   },
 ];
 
-if (environment.SENTRY_DNS) {
-  providers.push({
+const SENTRY_PROVIDERS = [
+  {
     provide: ErrorHandler,
     useValue: Sentry.createErrorHandler({
       showDialog: false,
     }),
-  });
-}
+  },
+  {
+    provide: Sentry.TraceService,
+    deps: [Router],
+  },
+  {
+    provide: APP_INITIALIZER,
+    //eslint-disable-next-line
+    useFactory: () => () => {},
+    deps: [Sentry.TraceService],
+    multi: true,
+  },
+];
 
 @NgModule({
   declarations: [AppComponent],
@@ -74,7 +86,7 @@ if (environment.SENTRY_DNS) {
     }),
     StoreRootModule,
   ],
-  providers,
+  providers: [...providers, ...SENTRY_PROVIDERS],
   bootstrap: [AppComponent],
 })
 export class AppModule {

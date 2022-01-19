@@ -76,8 +76,11 @@ jobs:
           envsubst < src/environments/constants.template.ts > src/environments/constants.ts
       - name: Build branch
         run: |
+          npm run setup-sentry
           cp ${{ needs.env_name.outputs.env_file }} src/environments/environment.ts
           ${{ needs.env_name.outputs.build_script }}
+        env:
+          SENTRY_DSN: '${{ secrets.SENTRY_DSN }}'
       - name: Ensure dist is present
         run: |
           test -d "dist" && echo OK || exit 1

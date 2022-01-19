@@ -7,11 +7,15 @@ import * as Sentry from '@sentry/angular';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
-environment.SENTRY_DNS &&
+environment.SENTRY_DSN &&
   Sentry.init({
-    dsn: environment.SENTRY_DNS,
+    dsn: environment.SENTRY_DSN,
     environment: environment.SENTRY_ENVIRONMENT,
-    release: environment.SENTRY_RELEASE,
+
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 0.4,
   });
 
 if (environment.production) {
